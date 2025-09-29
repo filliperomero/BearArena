@@ -24,12 +24,15 @@ void ABA_PlayerController::SetupInputComponent()
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
 	if (IsValid(EnhancedInputComponent))
 	{
+		/** Movement Actions */
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::StopJumping);
 
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
-		
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
+		
+		/** Abilities Actions */
+		EnhancedInputComponent->BindAction(PrimaryAction, ETriggerEvent::Started, this, &ThisClass::Primary);
 	}
 }
 
@@ -68,4 +71,9 @@ void ABA_PlayerController::Look(const FInputActionValue& Value)
 
 	AddYawInput(LookAxisVector.X);
 	AddPitchInput(LookAxisVector.Y);
+}
+
+void ABA_PlayerController::Primary()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Primary"));
 }

@@ -22,17 +22,21 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input")
 	TArray<TObjectPtr<UInputMappingContext>> InputMappingContexts;
 
-	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input")
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input|Movement")
 	TObjectPtr<UInputAction> JumpAction;
 
-	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input")
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input|Movement")
 	TObjectPtr<UInputAction> MoveAction;
 
-	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input")
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input|Movement")
 	TObjectPtr<UInputAction> LookAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input|Abilities")
+	TObjectPtr<UInputAction> PrimaryAction;
 
 	void Jump();
 	void StopJumping();
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void Primary();
 };
