@@ -16,6 +16,9 @@ class BEARARENA_API ABA_PlayerCharacter : public ABA_BaseCharacter
 
 public:
 	ABA_PlayerCharacter();
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = Camera)

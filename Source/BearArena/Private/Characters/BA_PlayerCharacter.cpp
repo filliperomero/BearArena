@@ -2,10 +2,12 @@
 
 #include "BearArena/Public/Characters/BA_PlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/BA_PlayerState.h"
 
 ABA_PlayerCharacter::ABA_PlayerCharacter()
 {
@@ -34,4 +36,33 @@ ABA_PlayerCharacter::ABA_PlayerCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>("FollowCamera");
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+}
+
+UAbilitySystemComponent* ABA_PlayerCharacter::GetAbilitySystemComponent() const
+{
+	const ABA_PlayerState* BA_PlayerState = GetPlayerState<ABA_PlayerState>();
+
+	if (!IsValid(BA_PlayerState)) return nullptr;
+
+	return BA_PlayerState->GetAbilitySystemComponent();
+}
+
+void ABA_PlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	// Init Ability Actor Info for the Server
+	if (!IsValid(GetAbilitySystemComponent())) return;
+
+	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+}
+
+void ABA_PlayerCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	// Init Ability Actor Info for the Client
+	if (!IsValid(GetAbilitySystemComponent())) return;
+
+	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 }
