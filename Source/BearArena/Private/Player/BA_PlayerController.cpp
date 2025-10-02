@@ -2,10 +2,13 @@
 
 #include "Player/BA_PlayerController.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "GameFramework/Character.h"
+#include "GameplayTags/BA_Tags.h"
 
 void ABA_PlayerController::SetupInputComponent()
 {
@@ -75,5 +78,13 @@ void ABA_PlayerController::Look(const FInputActionValue& Value)
 
 void ABA_PlayerController::Primary()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Primary"));
+	TryActivateAbility(BATags::Abilities::Primary);
+}
+
+void ABA_PlayerController::TryActivateAbility(const FGameplayTag& AbilityTag) const
+{
+	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn());
+	if (!IsValid(ASC)) return;
+
+	ASC->TryActivateAbilitiesByTag(AbilityTag.GetSingleTagContainer());
 }
