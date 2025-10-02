@@ -2,6 +2,9 @@
 
 #include "BearArena/Public/Characters/BA_BaseCharacter.h"
 
+#include "AbilitySystemComponent.h"
+#include "GameplayAbilitySpec.h"
+
 ABA_BaseCharacter::ABA_BaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -13,4 +16,16 @@ ABA_BaseCharacter::ABA_BaseCharacter()
 UAbilitySystemComponent* ABA_BaseCharacter::GetAbilitySystemComponent() const
 {
 	return nullptr;
+}
+
+void ABA_BaseCharacter::GiveStartupAbilities()
+{
+	check(IsValid(GetAbilitySystemComponent()));
+	
+	for (const auto& Ability : StartupAbilities)
+	{
+		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Ability);
+
+		GetAbilitySystemComponent()->GiveAbility(AbilitySpec);
+	}
 }

@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "BA_BaseCharacter.generated.h"
 
+class UGameplayAbility;
+
 UCLASS(Abstract)
 class BEARARENA_API ABA_BaseCharacter : public ACharacter, public IAbilitySystemInterface
 {
@@ -15,4 +17,11 @@ class BEARARENA_API ABA_BaseCharacter : public ACharacter, public IAbilitySystem
 public:
 	ABA_BaseCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+protected:
+	void GiveStartupAbilities();
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 };

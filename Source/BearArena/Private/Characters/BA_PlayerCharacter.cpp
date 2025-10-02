@@ -52,9 +52,10 @@ void ABA_PlayerCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	// Init Ability Actor Info for the Server
-	if (!IsValid(GetAbilitySystemComponent())) return;
+	if (!IsValid(GetAbilitySystemComponent()) || !HasAuthority()) return;
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+	GiveStartupAbilities();
 }
 
 void ABA_PlayerCharacter::OnRep_PlayerState()
