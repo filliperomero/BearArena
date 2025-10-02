@@ -36,6 +36,8 @@ void ABA_PlayerController::SetupInputComponent()
 		
 		/** Abilities Actions */
 		EnhancedInputComponent->BindAction(PrimaryAction, ETriggerEvent::Started, this, &ThisClass::Primary);
+		EnhancedInputComponent->BindAction(SecondaryAction, ETriggerEvent::Started, this, &ThisClass::Secondary);
+		EnhancedInputComponent->BindAction(TertiaryAction, ETriggerEvent::Started, this, &ThisClass::Tertiary);
 	}
 }
 
@@ -79,6 +81,16 @@ void ABA_PlayerController::Look(const FInputActionValue& Value)
 void ABA_PlayerController::Primary()
 {
 	TryActivateAbility(BATags::Abilities::Primary);
+}
+
+void ABA_PlayerController::Secondary()
+{
+	TryActivateAbility(BATags::Abilities::Secondary);
+}
+
+void ABA_PlayerController::Tertiary()
+{
+	TryActivateAbility(BATags::Abilities::Tertiary);
 }
 
 void ABA_PlayerController::TryActivateAbility(const FGameplayTag& AbilityTag) const

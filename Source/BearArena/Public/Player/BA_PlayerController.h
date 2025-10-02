@@ -35,10 +35,18 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input|Abilities")
 	TObjectPtr<UInputAction> PrimaryAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input|Abilities")
+	TObjectPtr<UInputAction> SecondaryAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Input|Abilities")
+	TObjectPtr<UInputAction> TertiaryAction;
+
 	void Jump();
 	void StopJumping();
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void Primary();
+	void Secondary();
+	void Tertiary();
 	void TryActivateAbility(const FGameplayTag& AbilityTag) const;
 };
