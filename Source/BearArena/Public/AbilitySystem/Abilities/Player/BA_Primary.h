@@ -13,9 +13,14 @@ class BEARARENA_API UBA_Primary : public UBA_GameplayAbility
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "BearArena|Abilities")
-	void HitBoxOverlapTest();
+	TArray<AActor*> HitBoxOverlapTest();
+
+	UFUNCTION(BlueprintCallable, Category = "BearArena|Abilities")
+	void SendEventToActors(const TArray<AActor*>& Actors, const FGameplayTag EventTag);
 
 private:
+	void DrawHitBoxOverlapDebugs(const TArray<FOverlapResult>& OverlapResults, const FVector& HitBoxLocation) const;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Abilities")
 	float HitBoxRadius { 100.f };
 
