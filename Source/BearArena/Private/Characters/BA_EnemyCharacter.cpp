@@ -1,14 +1,13 @@
 ﻿// Copyright Fillipe Romero. All Rights Reserved.
 
 #include "Characters/BA_EnemyCharacter.h"
-
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/BA_AbilitySystemComponent.h"
 
 ABA_EnemyCharacter::ABA_EnemyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent = CreateDefaultSubobject<UBA_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 }

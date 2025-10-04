@@ -1,14 +1,13 @@
 ﻿// Copyright Fillipe Romero. All Rights Reserved.
 
 #include "Player/BA_PlayerState.h"
-
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/BA_AbilitySystemComponent.h"
 
 ABA_PlayerState::ABA_PlayerState()
 {
 	SetNetUpdateFrequency(100.f);
 
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent = CreateDefaultSubobject<UBA_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 }
