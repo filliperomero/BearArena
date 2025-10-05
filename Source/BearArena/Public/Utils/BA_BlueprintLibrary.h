@@ -11,7 +11,7 @@ enum class EHitDirection : uint8
 {
 	Left,
 	Right,
-	Forward,
+	Front,
 	Back
 };
 
