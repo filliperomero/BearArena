@@ -2,6 +2,7 @@
 
 #include "Characters/BA_EnemyCharacter.h"
 #include "AbilitySystem/BA_AbilitySystemComponent.h"
+#include "AbilitySystem/BA_AttributeSet.h"
 
 ABA_EnemyCharacter::ABA_EnemyCharacter()
 {
@@ -10,6 +11,8 @@ ABA_EnemyCharacter::ABA_EnemyCharacter()
 	AbilitySystemComponent = CreateDefaultSubobject<UBA_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
+	AttributeSet = CreateDefaultSubobject<UBA_AttributeSet>("AttributeSet");
 }
 
 UAbilitySystemComponent* ABA_EnemyCharacter::GetAbilitySystemComponent() const

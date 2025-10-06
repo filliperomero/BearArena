@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerState.h"
 #include "BA_PlayerState.generated.h"
 
+class UAttributeSet;
 class UAbilitySystemComponent;
 
 UCLASS()
@@ -21,4 +22,7 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere, Category = "BearArena|Abilities")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
 };

@@ -2,6 +2,7 @@
 
 #include "Player/BA_PlayerState.h"
 #include "AbilitySystem/BA_AbilitySystemComponent.h"
+#include "AbilitySystem/BA_AttributeSet.h"
 
 ABA_PlayerState::ABA_PlayerState()
 {
@@ -10,6 +11,8 @@ ABA_PlayerState::ABA_PlayerState()
 	AbilitySystemComponent = CreateDefaultSubobject<UBA_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+
+	AttributeSet = CreateDefaultSubobject<UBA_AttributeSet>("AttributeSet");
 }
 
 UAbilitySystemComponent* ABA_PlayerState::GetAbilitySystemComponent() const
