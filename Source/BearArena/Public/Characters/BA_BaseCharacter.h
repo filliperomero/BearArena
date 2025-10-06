@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BA_BaseCharacter.generated.h"
 
+class UGameplayEffect;
 class UGameplayAbility;
 
 UCLASS(Abstract)
@@ -20,8 +21,12 @@ public:
 
 protected:
 	void GiveStartupAbilities();
+	void InitializeAttributes() const;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Effects")
+	TSubclassOf<UGameplayEffect> InitializeAttributesEffect;
 };

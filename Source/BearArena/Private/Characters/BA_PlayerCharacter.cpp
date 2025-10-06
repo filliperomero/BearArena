@@ -56,6 +56,7 @@ void ABA_PlayerCharacter::PossessedBy(AController* NewController)
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 	GiveStartupAbilities();
+	InitializeAttributes();
 }
 
 void ABA_PlayerCharacter::OnRep_PlayerState()

@@ -29,3 +29,14 @@ void ABA_BaseCharacter::GiveStartupAbilities()
 		GetAbilitySystemComponent()->GiveAbility(AbilitySpec);
 	}
 }
+
+void ABA_BaseCharacter::InitializeAttributes() const
+{
+	checkf(IsValid(InitializeAttributesEffect), TEXT("InitializeAttributesEffect not set."))
+	if (!IsValid(GetAbilitySystemComponent())) return;
+
+	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(InitializeAttributesEffect, 1.f, ContextHandle);
+
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+}
