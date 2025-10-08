@@ -17,6 +17,7 @@ class BEARARENA_API ABA_EnemyCharacter : public ABA_BaseCharacter
 public:
 	ABA_EnemyCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAttributeSet* GetAttributeSet() const override;
 
 protected:
 	virtual void BeginPlay() override;

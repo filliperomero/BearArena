@@ -25,4 +25,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+public:
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 };

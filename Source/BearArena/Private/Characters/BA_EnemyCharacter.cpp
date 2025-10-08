@@ -20,6 +20,11 @@ UAbilitySystemComponent* ABA_EnemyCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+UAttributeSet* ABA_EnemyCharacter::GetAttributeSet() const
+{
+	return AttributeSet;
+}
+
 void ABA_EnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -27,6 +32,7 @@ void ABA_EnemyCharacter::BeginPlay()
 	if (!IsValid(GetAbilitySystemComponent())) return;
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(this, this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
 
 	if (!HasAuthority()) return;
 

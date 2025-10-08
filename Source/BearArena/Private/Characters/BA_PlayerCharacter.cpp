@@ -47,6 +47,15 @@ UAbilitySystemComponent* ABA_PlayerCharacter::GetAbilitySystemComponent() const
 	return BA_PlayerState->GetAbilitySystemComponent();
 }
 
+UAttributeSet* ABA_PlayerCharacter::GetAttributeSet() const
+{
+	const ABA_PlayerState* BA_PlayerState = GetPlayerState<ABA_PlayerState>();
+
+	if (!IsValid(BA_PlayerState)) return nullptr;
+
+	return BA_PlayerState->GetAttributeSet();
+}
+
 void ABA_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -55,6 +64,7 @@ void ABA_PlayerCharacter::PossessedBy(AController* NewController)
 	if (!IsValid(GetAbilitySystemComponent()) || !HasAuthority()) return;
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
 	GiveStartupAbilities();
 	InitializeAttributes();
 }
@@ -67,4 +77,5 @@ void ABA_PlayerCharacter::OnRep_PlayerState()
 	if (!IsValid(GetAbilitySystemComponent())) return;
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
 }
