@@ -4,7 +4,9 @@
 
 #include "AbilitySystem/BA_AbilitySystemComponent.h"
 #include "AbilitySystem/BA_AttributeSet.h"
+#include "Blueprint/WidgetTree.h"
 #include "Characters/BA_BaseCharacter.h"
+#include "UI/Widgets/BA_AttributeWidget.h"
 
 void UBA_WidgetComponent::BeginPlay()
 {
@@ -14,9 +16,11 @@ void UBA_WidgetComponent::BeginPlay()
 
 	if (!IsASCInitialized())
 	{
-		Character = Cast<ABA_BaseCharacter>(GetOwner());
 		Character->OnASCInitialized.AddDynamic(this, &ThisClass::OnASCInitialized);
+		return;
 	}
+
+	InitializeAttributeDelegate();
 }
 
 void UBA_WidgetComponent::InitAbilitySystemData()
@@ -31,9 +35,52 @@ bool UBA_WidgetComponent::IsASCInitialized() const
 	return AbilitySystemComponent.IsValid() && AttributeSet.IsValid();
 }
 
+void UBA_WidgetComponent::InitializeAttributeDelegate()
+{
+	if (!AttributeSet->bAttributesInitialized)
+	{
+		AttributeSet->OnAttributesInitialized.AddDynamic(this, &ThisClass::BindToAttributeChanges);
+	}
+	else
+	{
+		BindToAttributeChanges();
+	}
+}
+
 void UBA_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	AttributeSet = Cast<UBA_AttributeSet>(AS);
 	AbilitySystemComponent = Cast<UBA_AbilitySystemComponent>(ASC);
+
+	if (!IsASCInitialized()) return;
+	
+	InitializeAttributeDelegate();
+}
+
+void UBA_WidgetComponent::BindToAttributeChanges()
+{
+	for (const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair : AttributeMap)
+	{
+		BindWidgetToAttributeChanges(GetUserWidgetObject(), Pair); // For checking the Owned Widget Object
+
+		GetUserWidgetObject()->WidgetTree->ForEachWidget([this, &Pair](UWidget* ChildWidget)
+		{
+			BindWidgetToAttributeChanges(ChildWidget, Pair);
+		});
+	}
+}
+
+void UBA_WidgetComponent::BindWidgetToAttributeChanges(UWidget* WidgetObject, const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair) const
+{
+	UBA_AttributeWidget* AttributeWidget = Cast<UBA_AttributeWidget>(WidgetObject);
+	if (!IsValid(AttributeWidget)) return; // We only care about BA_AttributeWidgets
+	if (!AttributeWidget->MatchesAttributes(Pair)) return; // Only subscribe for matching attributes
+
+	AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get()); // For initial values
+
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Key).AddLambda([this, AttributeWidget, &Pair](const FOnAttributeChangeData& AttributeChangeData)
+	{
+		AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get()); // For changes during the game
+	});
 }
 
