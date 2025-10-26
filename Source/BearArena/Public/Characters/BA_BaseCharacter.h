@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BA_BaseCharacter.generated.h"
 
+struct FOnAttributeChangeData;
 class UAttributeSet;
 class UGameplayEffect;
 class UGameplayAbility;
@@ -20,15 +21,22 @@ class BEARARENA_API ABA_BaseCharacter : public ACharacter, public IAbilitySystem
 
 public:
 	ABA_BaseCharacter();
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual UAttributeSet* GetAttributeSet() const { return nullptr; }
 
 	UPROPERTY(BlueprintAssignable)
 	FASCInitialized OnASCInitialized;
 
+	UFUNCTION(BlueprintCallable, Category = "BearArena|Death")
+	virtual void HandleRespawn();
+
 protected:
 	void GiveStartupAbilities();
 	void InitializeAttributes() const;
+	void OnHealthChanged(const FOnAttributeChangeData& AttributeChangeData);
+
+	virtual void HandleDeath();
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Abilities")
@@ -36,4 +44,11 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Effects")
 	TSubclassOf<UGameplayEffect> InitializeAttributesEffect;
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"), Replicated)
+	bool bAlive { true };
+
+public:
+	bool IsAlive() const { return bAlive; }
+	void SetAlive(bool InAlive) { bAlive = InAlive; }
 };

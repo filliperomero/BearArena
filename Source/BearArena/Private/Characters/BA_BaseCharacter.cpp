@@ -4,6 +4,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "GameplayAbilitySpec.h"
+#include "Net/UnrealNetwork.h"
 
 ABA_BaseCharacter::ABA_BaseCharacter()
 {
@@ -11,6 +12,13 @@ ABA_BaseCharacter::ABA_BaseCharacter()
 
 	// Tick and Refresh Bone transforms whether rendered or not - for bone updates on a dedicated server
 	GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+}
+
+void ABA_BaseCharacter::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ThisClass, bAlive);
 }
 
 UAbilitySystemComponent* ABA_BaseCharacter::GetAbilitySystemComponent() const
@@ -39,4 +47,22 @@ void ABA_BaseCharacter::InitializeAttributes() const
 	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(InitializeAttributesEffect, 1.f, ContextHandle);
 
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+}
+
+void ABA_BaseCharacter::OnHealthChanged(const FOnAttributeChangeData& AttributeChangeData)
+{
+	if (AttributeChangeData.NewValue <= 0.f)
+	{
+		HandleDeath();
+	}
+}
+
+void ABA_BaseCharacter::HandleDeath()
+{
+	SetAlive(false);
+}
+
+void ABA_BaseCharacter::HandleRespawn()
+{
+	SetAlive(true);
 }

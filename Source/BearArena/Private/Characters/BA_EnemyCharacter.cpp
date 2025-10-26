@@ -38,5 +38,10 @@ void ABA_EnemyCharacter::BeginPlay()
 
 	GiveStartupAbilities();
 	InitializeAttributes();
+
+	if (UBA_AttributeSet* BA_AttributeSet = Cast<UBA_AttributeSet>(GetAttributeSet()))
+	{
+		GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(BA_AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
+	}
 }
 

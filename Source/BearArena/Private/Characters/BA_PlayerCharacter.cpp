@@ -3,6 +3,7 @@
 #include "BearArena/Public/Characters/BA_PlayerCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/BA_AttributeSet.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -67,6 +68,11 @@ void ABA_PlayerCharacter::PossessedBy(AController* NewController)
 	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
 	GiveStartupAbilities();
 	InitializeAttributes();
+
+	if (UBA_AttributeSet* BA_AttributeSet = Cast<UBA_AttributeSet>(GetAttributeSet()))
+	{
+		GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(BA_AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
+	}
 }
 
 void ABA_PlayerCharacter::OnRep_PlayerState()
@@ -78,4 +84,9 @@ void ABA_PlayerCharacter::OnRep_PlayerState()
 
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
+
+	if (UBA_AttributeSet* BA_AttributeSet = Cast<UBA_AttributeSet>(GetAttributeSet()))
+	{
+		GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(BA_AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
+	}
 }
