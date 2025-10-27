@@ -11,7 +11,7 @@ struct FOnAttributeChangeData;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAttributeChanged, FGameplayAttribute, Attribute, float, NewValue,
                                                float, OldValue);
 
-UCLASS()
+UCLASS(blueprintType, meta = (ExposedAsyncProxy = AsyncTask))
 class BEARARENA_API UBA_AttributeChangeTask : public UBlueprintAsyncActionBase
 {
 	GENERATED_BODY()
