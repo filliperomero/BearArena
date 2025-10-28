@@ -21,7 +21,7 @@ class BEARARENA_API ABA_BaseCharacter : public ACharacter, public IAbilitySystem
 
 public:
 	ABA_BaseCharacter();
-	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual UAttributeSet* GetAttributeSet() const { return nullptr; }
 
@@ -30,6 +30,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BearArena|Death")
 	virtual void HandleRespawn();
+
+	UFUNCTION(BlueprintCallable, Category = "BearArena|Attributes")
+	void ResetAttributes();
 
 protected:
 	void GiveStartupAbilities();
@@ -44,6 +47,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Effects")
 	TSubclassOf<UGameplayEffect> InitializeAttributesEffect;
+
+	UPROPERTY(EditDefaultsOnly, Category = "BearArena|Effects")
+	TSubclassOf<UGameplayEffect> ResetAttributesEffect;
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"), Replicated)
 	bool bAlive { true };
