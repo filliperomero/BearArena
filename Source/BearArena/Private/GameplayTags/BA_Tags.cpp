@@ -27,4 +27,9 @@ namespace BATags
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HitReact, "BATags.Events.Enemy.HitReact", "Tag for the Enemy Hit React Event");
 		}
 	}
+
+	namespace Status
+	{
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Dead, "BATags.Status.Dead", "Tag for when the character is dead");
+	}
 }
