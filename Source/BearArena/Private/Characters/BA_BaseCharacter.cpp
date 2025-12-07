@@ -6,6 +6,11 @@
 #include "GameplayAbilitySpec.h"
 #include "Net/UnrealNetwork.h"
 
+namespace BearArenaTags
+{
+	const FName Player = FName("Player");
+}
+
 ABA_BaseCharacter::ABA_BaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;

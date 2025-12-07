@@ -7,6 +7,11 @@
 #include "GameFramework/Character.h"
 #include "BA_BaseCharacter.generated.h"
 
+namespace BearArenaTags
+{
+	extern BEARARENA_API const FName Player;
+}
+
 struct FOnAttributeChangeData;
 class UAttributeSet;
 class UGameplayEffect;
@@ -33,6 +38,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BearArena|Attributes")
 	void ResetAttributes();
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void RotateToTarget(AActor* RotateTarget);
 
 protected:
 	void GiveStartupAbilities();

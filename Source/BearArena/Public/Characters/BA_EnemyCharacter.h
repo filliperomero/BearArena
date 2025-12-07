@@ -18,9 +18,22 @@ public:
 	ABA_EnemyCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual UAttributeSet* GetAttributeSet() const override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BearArena|AI")
+	float AcceptanceRadius { 500.f };
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BearArena|AI")
+	float MinAttackDelay { 0.1f };
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BearArena|AI")
+	float MaxAttackDelay { 0.5f };
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	float GetTimelineLength();
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void HandleDeath() override;
 
 private:
 	UPROPERTY(VisibleAnywhere)

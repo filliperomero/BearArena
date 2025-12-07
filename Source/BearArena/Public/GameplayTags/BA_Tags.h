@@ -20,6 +20,7 @@ namespace BATags
 		namespace Enemy
 		{
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(HitReact);
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attack);
 		}
 	}
 
@@ -30,6 +31,7 @@ namespace BATags
 		namespace Enemy
 		{
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(HitReact);
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(EndAttack);
 		}
 	}
 

@@ -3,6 +3,7 @@
 #include "Characters/BA_EnemyCharacter.h"
 #include "AbilitySystem/BA_AbilitySystemComponent.h"
 #include "AbilitySystem/BA_AttributeSet.h"
+#include "Runtime/AIModule/Classes/AIController.h"
 
 ABA_EnemyCharacter::ABA_EnemyCharacter()
 {
@@ -43,5 +44,16 @@ void ABA_EnemyCharacter::BeginPlay()
 	{
 		GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(BA_AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
 	}
+}
+
+void ABA_EnemyCharacter::HandleDeath()
+{
+	Super::HandleDeath();
+	
+	AAIController* AIController = GetController<AAIController>();
+	
+	if (!IsValid(AIController)) return;
+	
+	AIController->StopMovement();
 }
 

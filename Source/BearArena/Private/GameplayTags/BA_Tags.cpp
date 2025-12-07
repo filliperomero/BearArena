@@ -17,6 +17,7 @@ namespace BATags
 		namespace Enemy
 		{
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HitReact, "BATags.Abilities.Enemy.HitReact", "Tag for the Enemy Hit React Ability");
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attack, "BATags.Abilities.Enemy.Attack", "Tag for the Enemy Attack Ability");
 		}
 	}
 
@@ -27,6 +28,7 @@ namespace BATags
 		namespace Enemy
 		{
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HitReact, "BATags.Events.Enemy.HitReact", "Tag for the Enemy Hit React Event");
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(EndAttack, "BATags.Events.Enemy.EndAttack", "Tag for the Enemy End Attack Event");
 		}
 	}
 

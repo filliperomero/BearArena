@@ -37,6 +37,8 @@ ABA_PlayerCharacter::ABA_PlayerCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>("FollowCamera");
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+
+	Tags.Add(BearArenaTags::Player);
 }
 
 UAbilitySystemComponent* ABA_PlayerCharacter::GetAbilitySystemComponent() const
