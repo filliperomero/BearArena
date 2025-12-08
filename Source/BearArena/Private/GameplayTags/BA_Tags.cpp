@@ -36,4 +36,9 @@ namespace BATags
 	{
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Dead, "BATags.Status.Dead", "Tag for when the character is dead");
 	}
+	
+	namespace SetByCaller
+	{
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Projectile, "BATags.SetByCaller.Projectile", "Tag for Set by Caller Magnitude for Projectiles");
+	}
 }

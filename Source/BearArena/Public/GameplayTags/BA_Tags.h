@@ -39,4 +39,9 @@ namespace BATags
 	{
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Dead);
 	}
+
+	namespace SetByCaller
+	{
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Projectile);
+	}
 }
