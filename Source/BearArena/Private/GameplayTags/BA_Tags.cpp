@@ -29,6 +29,7 @@ namespace BATags
 		{
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HitReact, "BATags.Events.Enemy.HitReact", "Tag for the Enemy Hit React Event");
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(EndAttack, "BATags.Events.Enemy.EndAttack", "Tag for the Enemy End Attack Event");
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MeleeTraceHit, "BATags.Events.Enemy.MeleeTraceHit", "Tag for the Enemy Melee Trace Hit Event");
 		}
 	}
 
