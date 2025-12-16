@@ -46,7 +46,7 @@ TArray<FHitResult> UBA_MeleeAttackNotify::PerformSphereTrace(USkeletalMeshCompon
 	
 	if (bDrawDebugs)
 	{
-		DrawDebugSphereTraceMulti(World, Start, End, SphereTraceRadius, EDrawDebugTrace::ForDuration, bHit, OutHits, FColor::Green, FColor::Red, 5.f);
+		DrawDebugSphereTraceMulti(World, Start, End, SphereTraceRadius, EDrawDebugTrace::ForDuration, bHit, OutHits, FColor::Red, FColor::Green, 5.f);
 	}
 	
 	return OutHits;
