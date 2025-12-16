@@ -6,6 +6,10 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "BA_BlueprintLibrary.generated.h"
 
+struct FGameplayTag;
+struct FGameplayEventData;
+class UGameplayEffect;
+
 UENUM(BlueprintType)
 enum class EHitDirection : uint8
 {
@@ -41,4 +45,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BearArena")
 	static FClosestActorWithTagResult FindClosestActorWithTag(const UObject* WorldContextObject, const FVector& Origin, const FName& Tag);
+	
+	UFUNCTION(BlueprintCallable, Category = "BearArena")
+	static void SendDamageEventToPlayer(AActor* Target, const TSubclassOf<UGameplayEffect>& DamageEffect, const FGameplayEventData& Payload, const FGameplayTag& DataTag, float Damage);
 };

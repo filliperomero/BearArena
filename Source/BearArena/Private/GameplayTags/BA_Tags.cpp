@@ -31,6 +31,12 @@ namespace BATags
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(EndAttack, "BATags.Events.Enemy.EndAttack", "Tag for the Enemy End Attack Event");
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MeleeTraceHit, "BATags.Events.Enemy.MeleeTraceHit", "Tag for the Enemy Melee Trace Hit Event");
 		}
+
+		namespace Player
+		{
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HitReact, "BATags.Events.Player.HitReact", "Tag for the Player Hit React Event");
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Death, "BATags.Events.Player.Death", "Tag for the Player Death Event");
+		}
 	}
 
 	namespace Status
@@ -41,5 +47,6 @@ namespace BATags
 	namespace SetByCaller
 	{
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Projectile, "BATags.SetByCaller.Projectile", "Tag for Set by Caller Magnitude for Projectiles");
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Melee, "BATags.SetByCaller.Melee", "Tag for Set by Caller Magnitude for Melee Attack");
 	}
 }

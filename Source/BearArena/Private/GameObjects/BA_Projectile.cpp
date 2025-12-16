@@ -2,11 +2,11 @@
 
 #include "GameObjects/BA_Projectile.h"
 
-#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "Characters/BA_PlayerCharacter.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GameplayTags/BA_Tags.h"
+#include "Utils/BA_BlueprintLibrary.h"
 
 ABA_Projectile::ABA_Projectile()
 {
@@ -24,15 +24,13 @@ void ABA_Projectile::NotifyActorBeginOverlap(AActor* OtherActor)
 	ABA_PlayerCharacter* PlayerCharacter = Cast<ABA_PlayerCharacter>(OtherActor);
 	if (!IsValid(PlayerCharacter) || !PlayerCharacter->IsAlive()) return;
 	
-	UAbilitySystemComponent* AbilitySystemComponent = PlayerCharacter->GetAbilitySystemComponent();
-	if (!IsValid(AbilitySystemComponent) || !HasAuthority()) return;
+	if (!HasAuthority()) return;
 	
-	FGameplayEffectContextHandle ContextHandle = AbilitySystemComponent->MakeEffectContext();
-	FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(DamageEffect, 1.f, ContextHandle);
+	FGameplayEventData Payload;
+	Payload.Instigator = GetOwner();
+	Payload.Target = PlayerCharacter;
 	
-	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, BATags::SetByCaller::Projectile, Damage * -1.f);
-	
-	AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+	UBA_BlueprintLibrary::SendDamageEventToPlayer(PlayerCharacter, DamageEffect, Payload, BATags::SetByCaller::Projectile, Damage);
 	
 	SpawnImpactEffects();
 	Destroy();
