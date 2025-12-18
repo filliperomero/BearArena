@@ -69,7 +69,7 @@ FClosestActorWithTagResult UBA_BlueprintLibrary::FindClosestActorWithTag(const U
 	return Result;
 }
 
-void UBA_BlueprintLibrary::SendDamageEventToPlayer(AActor* Target, const TSubclassOf<UGameplayEffect>& DamageEffect, const FGameplayEventData& Payload, const FGameplayTag& DataTag, float Damage)
+void UBA_BlueprintLibrary::SendDamageEventToPlayer(AActor* Target, const TSubclassOf<UGameplayEffect>& DamageEffect, FGameplayEventData& Payload, const FGameplayTag& DataTag, float Damage, UObject* OptionalParticleSystem)
 {
 	ABA_BaseCharacter* PlayerCharacter = Cast<ABA_BaseCharacter>(Target);
 	if (!IsValid(PlayerCharacter) || !PlayerCharacter->IsAlive()) return;
@@ -80,6 +80,7 @@ void UBA_BlueprintLibrary::SendDamageEventToPlayer(AActor* Target, const TSubcla
 	const bool bIsLethal = AttributeSet->GetHealth() - Damage <= 0.f;
 	const FGameplayTag EventTag = bIsLethal ? BATags::Events::Player::Death : BATags::Events::Player::HitReact;
 	
+	Payload.OptionalObject = OptionalParticleSystem;
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(PlayerCharacter, EventTag, Payload);
 	
 	UAbilitySystemComponent* TargetASC = PlayerCharacter->GetAbilitySystemComponent();
