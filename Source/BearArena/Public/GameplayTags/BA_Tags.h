@@ -16,6 +16,8 @@ namespace BATags
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Tertiary);
 
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Death);
+		
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(BlockHitReact);
 
 		namespace Enemy
 		{

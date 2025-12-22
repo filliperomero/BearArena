@@ -13,6 +13,8 @@ namespace BATags
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Tertiary, "BATags.Abilities.Tertiary", "Tag for the Tertiary Ability");
 
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Death, "BATags.Abilities.Death", "Tag for the Death Ability");
+		
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(BlockHitReact, "BATags.Abilities.BlockHitReact", "Tag blocking Hit react");
 
 		namespace Enemy
 		{
