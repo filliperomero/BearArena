@@ -36,7 +36,10 @@ void UBA_SearchForTarget::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 
 void UBA_SearchForTarget::EndAttackEventReceived(FGameplayEventData Payload)
 {
-	StartSearch();
+	if (OwningEnemy.IsValid() && !OwningEnemy->bIsBeingLaunched)
+	{
+		StartSearch();
+	}
 }
 
 void UBA_SearchForTarget::StartSearch()

@@ -5,6 +5,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/BA_AttributeSet.h"
 #include "Characters/BA_BaseCharacter.h"
+#include "Characters/BA_EnemyCharacter.h"
 #include "Engine/OverlapResult.h"
 #include "GameplayTags/BA_Tags.h"
 #include "Kismet/GameplayStatics.h"
@@ -194,6 +195,11 @@ TArray<AActor*> UBA_BlueprintLibrary::ApplyKnockback(AActor* AvatarActor, const 
 			
 			UWorld* World = GEngine->GetWorldFromContextObject(AvatarActor, EGetWorldErrorMode::LogAndReturnNull);
 			DrawDebugDirectionalArrow(World, HitCharacterLocation, HitCharacterLocation + KnockbackForce, 100.f, FColor::Green, false, 3.f);
+		}
+		
+		if (ABA_EnemyCharacter* EnemyCharacter = Cast<ABA_EnemyCharacter>(HitCharacter); IsValid(EnemyCharacter))
+		{
+			EnemyCharacter->StopMovementUntilLanded();
 		}
 		
 		HitCharacter->LaunchCharacter(KnockbackForce, true, true);

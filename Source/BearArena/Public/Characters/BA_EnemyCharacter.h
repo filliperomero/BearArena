@@ -18,6 +18,7 @@ public:
 	ABA_EnemyCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual UAttributeSet* GetAttributeSet() const override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BearArena|AI")
 	float AcceptanceRadius { 500.f };
@@ -28,8 +29,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BearArena|AI")
 	float MaxAttackDelay { 0.5f };
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BearArena", Replicated)
+	bool bIsBeingLaunched { false };
+	
 	UFUNCTION(BlueprintImplementableEvent)
 	float GetTimelineLength();
+	
+	void StopMovementUntilLanded();
 
 protected:
 	virtual void BeginPlay() override;
@@ -41,4 +47,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+	
+	UFUNCTION()
+	void EnableMovementOnLanded(const FHitResult& HitResult);
 };
