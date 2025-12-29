@@ -7,6 +7,8 @@
 
 namespace BATags
 {
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(None);
+	
 	namespace Abilities
 	{
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(ActivateOnGiven);
@@ -53,5 +55,10 @@ namespace BATags
 	{
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Projectile);
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Melee);
+		
+		namespace Player
+		{
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Secondary);
+		}
 	}
 }

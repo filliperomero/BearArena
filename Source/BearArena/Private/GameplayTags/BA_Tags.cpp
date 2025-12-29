@@ -4,6 +4,8 @@
 
 namespace BATags
 {
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(None, "BATags.None", "None");
+	
 	namespace Abilities
 	{
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(ActivateOnGiven, "BATags.Abilities.ActivateOnGiven", "Tag for Abilities that should Activate immediately once given");
@@ -50,5 +52,10 @@ namespace BATags
 	{
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Projectile, "BATags.SetByCaller.Projectile", "Tag for Set by Caller Magnitude for Projectiles");
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Melee, "BATags.SetByCaller.Melee", "Tag for Set by Caller Magnitude for Melee Attack");
+		
+		namespace Player
+		{
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Secondary, "BATags.SetByCaller.Player.Secondary", "Tag for Set by Caller Magnitude for Player Secondary Ability");
+		}
 	}
 }

@@ -30,7 +30,7 @@ void ABA_Projectile::NotifyActorBeginOverlap(AActor* OtherActor)
 	Payload.Instigator = GetOwner();
 	Payload.Target = PlayerCharacter;
 	
-	UBA_BlueprintLibrary::SendDamageEventToPlayer(PlayerCharacter, DamageEffect, Payload, BATags::SetByCaller::Projectile, Damage);
+	UBA_BlueprintLibrary::SendDamageEventToPlayer(PlayerCharacter, DamageEffect, Payload, BATags::SetByCaller::Projectile, Damage, BATags::None);
 	
 	SpawnImpactEffects();
 	Destroy();
