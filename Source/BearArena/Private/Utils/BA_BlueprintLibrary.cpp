@@ -151,3 +151,53 @@ void UBA_BlueprintLibrary::DrawHitBoxOverlapDebugs(const UObject* WorldContextOb
 		}
 	}
 }
+
+TArray<AActor*> UBA_BlueprintLibrary::ApplyKnockback(AActor* AvatarActor, const TArray<AActor*>& HitActors, float InnerRadius, float OuterRadius, float LaunchForceMagnitude, float RotationAngle, bool bDrawDebugs)
+{
+	if (!IsValid(AvatarActor)) return TArray<AActor*>();
+	
+	const FVector AvatarLocation = AvatarActor->GetActorLocation();
+	
+	for (AActor* HitActor : HitActors)
+	{
+		ACharacter* HitCharacter = Cast<ACharacter>(HitActor);
+		if (!IsValid(HitCharacter)) return TArray<AActor*>();
+		
+		const FVector HitCharacterLocation = HitCharacter->GetActorLocation();
+		
+		const FVector ToHitActorLocation = HitCharacterLocation - AvatarLocation;
+		const float Distance = FVector::Dist(AvatarLocation, HitCharacterLocation);
+		
+		float LaunchForce = 0.f;
+		if (Distance > OuterRadius) continue;
+		
+		if (Distance <= InnerRadius)
+		{
+			LaunchForce = LaunchForceMagnitude;
+		}
+		else
+		{
+			const FVector2D FalloffRange(InnerRadius, OuterRadius); // input Range
+			const FVector2D LaunchForceRange(LaunchForceMagnitude, 0.f); // output range
+			LaunchForce = FMath::GetMappedRangeValueClamped(FalloffRange, LaunchForceRange, Distance);
+		}
+		
+		FVector KnockbackForce = ToHitActorLocation.GetSafeNormal();
+		KnockbackForce.Z = 0;
+		
+		const FVector Right = KnockbackForce.RotateAngleAxis(90.f, FVector::UpVector);
+		KnockbackForce = KnockbackForce.RotateAngleAxis(-RotationAngle, Right) * LaunchForce;
+		
+		if (bDrawDebugs)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::Printf(TEXT("LaunchForce: %f"), LaunchForce));
+			
+			UWorld* World = GEngine->GetWorldFromContextObject(AvatarActor, EGetWorldErrorMode::LogAndReturnNull);
+			DrawDebugDirectionalArrow(World, HitCharacterLocation, HitCharacterLocation + KnockbackForce, 100.f, FColor::Green, false, 3.f);
+		}
+		
+		HitCharacter->LaunchCharacter(KnockbackForce, true, true);
+	}
+	
+	return HitActors;
+}
