@@ -76,11 +76,12 @@ void UBA_WidgetComponent::BindWidgetToAttributeChanges(UWidget* WidgetObject, co
 	if (!IsValid(AttributeWidget)) return; // We only care about BA_AttributeWidgets
 	if (!AttributeWidget->MatchesAttributes(Pair)) return; // Only subscribe for matching attributes
 
-	AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get()); // For initial values
+	AttributeWidget->AvatarActor = Character;
+	AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get(), 0.f); // For initial values
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Key).AddLambda([this, AttributeWidget, &Pair](const FOnAttributeChangeData& AttributeChangeData)
 	{
-		AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get()); // For changes during the game
+		AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get(), AttributeChangeData.OldValue); // For changes during the game
 	});
 }
 
