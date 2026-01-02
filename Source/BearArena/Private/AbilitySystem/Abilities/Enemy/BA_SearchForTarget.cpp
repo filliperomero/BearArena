@@ -57,7 +57,9 @@ void UBA_SearchForTarget::StartSearch()
 void UBA_SearchForTarget::Search()
 {
 	const FVector SearchOrigin = GetAvatarActorFromActorInfo()->GetActorLocation();
-	FClosestActorWithTagResult ClosestActorWithTagResult = UBA_BlueprintLibrary::FindClosestActorWithTag(this, SearchOrigin, BearArenaTags::Player);
+	if (!OwningEnemy.IsValid()) return;
+	
+	FClosestActorWithTagResult ClosestActorWithTagResult = UBA_BlueprintLibrary::FindClosestActorWithTag(GetAvatarActorFromActorInfo(), SearchOrigin, BearArenaTags::Player, OwningEnemy->SearchRange);
 	
 	TargetBaseCharacter = Cast<ABA_BaseCharacter>(ClosestActorWithTagResult.Actor);
 	

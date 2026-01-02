@@ -40,7 +40,7 @@ FName UBA_BlueprintLibrary::GetHitDirectionName(const EHitDirection& HitDirectio
 	}
 }
 
-FClosestActorWithTagResult UBA_BlueprintLibrary::FindClosestActorWithTag(const UObject* WorldContextObject, const FVector& Origin, const FName& Tag)
+FClosestActorWithTagResult UBA_BlueprintLibrary::FindClosestActorWithTag(const UObject* WorldContextObject, const FVector& Origin, const FName& Tag, float SearchRange)
 {
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsWithTag(WorldContextObject, Tag, OutActors);
@@ -56,6 +56,8 @@ FClosestActorWithTagResult UBA_BlueprintLibrary::FindClosestActorWithTag(const U
 		if (!IsValid(BaseCharacter) || !BaseCharacter->IsAlive()) continue;
 
 		const float Distance = FVector::Dist(Origin, BaseCharacter->GetActorLocation());
+		
+		if (Distance > SearchRange) continue;
 
 		if (Distance < ClosestDistance)
 		{
