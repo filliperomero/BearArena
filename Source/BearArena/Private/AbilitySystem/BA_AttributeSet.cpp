@@ -22,6 +22,16 @@ void UBA_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 void UBA_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
+	
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
+	}
+	
+	if (Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
+	}
 
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute() && GetHealth() <= 0.f)
 	{
